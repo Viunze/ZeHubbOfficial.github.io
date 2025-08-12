@@ -1,154 +1,537 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZeHubb Official</title>
-  <style>
-    body {
-      background-color: #0d0d0d;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #1a1a1a;
-      padding: 20px;
-      text-align: center;
-      font-size: 1.8em;
-      font-weight: bold;
-      color: #00ffcc;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-    }
-    .script-card {
-      background-color: #1a1a1a;
-      padding: 15px;
-      margin-bottom: 20px;
-      border-radius: 10px;
-      border: 1px solid #333;
-    }
-    .script-title {
-      font-size: 1.3em;
-      color: #00ffcc;
-      margin-bottom: 8px;
-    }
-    .code-box {
-      background-color: #000;
-      padding: 10px;
-      border-radius: 5px;
-      font-family: monospace;
-      font-size: 0.9em;
-      overflow-x: auto;
-      position: relative;
-    }
-    button.copy-btn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background-color: #00ffcc;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      color: #000;
-    }
-    button.copy-btn:hover {
-      background-color: #00cca3;
-    }
-    footer {
-      background-color: #1a1a1a;
-      text-align: center;
-      padding: 20px;
-      margin-top: 30px;
-    }
-    footer a {
-      margin: 0 10px;
-      display: inline-block;
-    }
-    footer img {
-      width: 40px;
-      height: 40px;
-      vertical-align: middle;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeHubb Official Website</title>
+    <style>
+        /* CSS yang Diperbarui */
+        html, body {
+            height: 100%;
+            background-color: #0d0d0d;
+            color: #ffffff;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- BACKGROUND DENGAN GRADASI DAN ANIMASI BARU --- */
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            /* Efek gradasi warna yang berubah */
+            background: radial-gradient(circle at 10% 20%, rgba(255, 0, 255, 0.1) 0%, rgba(255, 0, 255, 0) 25%),
+                        radial-gradient(circle at 90% 80%, rgba(0, 255, 255, 0.1) 0%, rgba(0, 255, 255, 0) 25%);
+            animation: background-colorshift 20s infinite linear;
+        }
+        
+        @keyframes background-colorshift {
+            0% { background-position: 0% 0%, 100% 100%; }
+            25% { background-position: 50% 10%, 80% 90%; }
+            50% { background-position: 100% 0%, 0% 100%; }
+            75% { background-position: 50% 90%, 20% 10%; }
+            100% { background-position: 0% 0%, 100% 100%; }
+        }
+        /* --- AKHIR BACKGROUND BARU --- */
+
+        /* Loading Screen Style */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0d0d0d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            z-index: 9999;
+            transition: opacity 1s ease-in-out;
+            opacity: 1;
+        }
+
+        #loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #loading-content {
+            padding: 40px;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5), inset 0 0 10px rgba(76, 175, 80, 0.5);
+            background-color: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(5px);
+            animation: pulse-border 2s infinite alternate;
+        }
+        
+        /* Animasi Glitch untuk teks */
+        #loading-content h1 {
+            font-size: 3em;
+            color: #4CAF50;
+            text-shadow: 0 0 5px #4CAF50, 0 0 15px #4CAF50, 0 0 25px #4CAF50;
+            animation: neon-glow 1.5s infinite alternate, glitch 2s infinite linear;
+        }
+        @keyframes glitch {
+            0% { text-shadow: 0 0 5px #4CAF50, 0 0 15px #4CAF50; transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { text-shadow: 0 0 5px #4CAF50, 0 0 15px #4CAF50; transform: translate(0); }
+        }
+        
+        /* Preloader Neon */
+        .preloader {
+            width: 120px;
+            height: 5px;
+            background: rgba(76, 175, 80, 0.2);
+            border-radius: 5px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .preloader::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, #4CAF50, transparent);
+            animation: move-preloader 1.5s infinite;
+        }
+        @keyframes move-preloader {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        #enter-button {
+            margin-top: 20px;
+            padding: 12px 30px;
+            font-size: 1em;
+            background-color: #4CAF50;
+            color: #fff;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        #enter-button:hover {
+            background-color: #3e8e41;
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.8), 0 0 20px rgba(76, 175, 80, 0.5);
+        }
+
+        #enter-button:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes pulse-border {
+            from { border-color: #4CAF50; }
+            to { border-color: #3e8e41; }
+        }
+
+        @keyframes neon-glow {
+            from { text-shadow: 0 0 5px #4CAF50, 0 0 15px #4CAF50; }
+            to { text-shadow: 0 0 10px #4CAF50, 0 0 25px #4CAF50, 0 0 35px #4CAF50; }
+        }
+        
+        /* Main Content Style */
+        #main-content {
+            display: none;
+            transition: opacity 1s ease-in-out;
+            opacity: 0;
+            padding: 20px;
+            overflow-y: auto;
+            height: 100vh;
+        }
+
+        #main-content.visible {
+            display: block;
+            opacity: 1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(18, 18, 18, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .container h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow-text 5s infinite linear;
+            position: relative;
+        }
+        @keyframes rainbow-text {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        
+        .container h1::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 20px #ff0000, inset 0 0 20px #ff0000;
+            animation: neon-glow-effect 5s infinite alternate;
+        }
+        @keyframes neon-glow-effect {
+            0% { box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 20px #ff0000, inset 0 0 20px #ff0000; }
+            14% { box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 20px #ff7f00, inset 0 0 20px #ff7f00; }
+            28% { box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 20px #ffff00, inset 0 0 20px #ffff00; }
+            42% { box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 20px #00ff00, inset 0 0 20px #00ff00; }
+            57% { box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 20px #0000ff, inset 0 0 20px #0000ff; }
+            71% { box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 20px #4b0082, inset 0 0 20px #4b0082; }
+            85% { box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 20px #9400d3, inset 0 0 20px #9400d3; }
+            100% { box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 20px #ff0000, inset 0 0 20px #ff0000; }
+        }
+        
+        .script-item {
+            background-color: #2c2c2c;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            position: relative;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
+            transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        .script-item:hover {
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.8), 0 0 25px rgba(76, 175, 80, 0.5);
+            transform: translateY(-5px);
+        }
+
+        /* --- Perubahan CSS untuk Efek Neon Berbeda pada Judul dan Tombol --- */
+        .script-item h3 {
+            margin: 0;
+            transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+        }
+        
+        /* Judul Script */
+        .script-item h3#zehubb-universal-title { color: cyan; text-shadow: 0 0 10px cyan, 0 0 20px cyan; }
+        .script-item h3#fling-all-title { color: magenta; text-shadow: 0 0 10px magenta, 0 0 20px magenta; }
+        .script-item h3#zefling-title { color: yellow; text-shadow: 0 0 10px yellow, 0 0 20px yellow; }
+        .script-item h3#zertex-title { color: lime; text-shadow: 0 0 10px lime, 0 0 20px lime; }
+        .script-item h3#zeflingv2-title { color: orange; text-shadow: 0 0 10px orange, 0 0 20px orange; }
+        .script-item h3#zeview-title { color: purple; text-shadow: 0 0 10px purple, 0 0 20px purple; }
+        .script-item h3#zeorbit-title { color: blue; text-shadow: 0 0 10px blue, 0 0 20px blue; }
+
+        /* Tombol Copy */
+        .copy-button {
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            color: #fff;
+        }
+        
+        #item-zehubb-universal .copy-button {
+            background-color: cyan;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        #item-zehubb-universal .copy-button:hover { background-color: #00cccc; box-shadow: 0 0 15px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.5); }
+        #item-fling-all .copy-button {
+            background-color: magenta;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+        }
+        #item-fling-all .copy-button:hover { background-color: #cc00cc; box-shadow: 0 0 15px rgba(255, 0, 255, 0.8), 0 0 20px rgba(255, 0, 255, 0.5); }
+        #item-zefling .copy-button {
+            background-color: yellow;
+            color: #333;
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+        }
+        #item-zefling .copy-button:hover { background-color: #cccc00; box-shadow: 0 0 15px rgba(255, 255, 0, 0.8), 0 0 20px rgba(255, 255, 0, 0.5); }
+        #item-zertex .copy-button {
+            background-color: lime;
+            color: #333;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        #item-zertex .copy-button:hover { background-color: #00cc00; box-shadow: 0 0 15px rgba(0, 255, 0, 0.8), 0 0 20px rgba(0, 255, 0, 0.5); }
+        #item-zeflingv2 .copy-button {
+            background-color: orange;
+            color: #333;
+            box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+        }
+        #item-zeflingv2 .copy-button:hover { background-color: #cc8400; box-shadow: 0 0 15px rgba(255, 165, 0, 0.8), 0 0 20px rgba(255, 165, 0, 0.5); }
+        #item-zeview .copy-button {
+            background-color: purple;
+            box-shadow: 0 0 10px rgba(128, 0, 128, 0.5);
+        }
+        #item-zeview .copy-button:hover { background-color: #660066; box-shadow: 0 0 15px rgba(128, 0, 128, 0.8), 0 0 20px rgba(128, 0, 128, 0.5); }
+        #item-zeorbit .copy-button {
+            background-color: blue;
+            box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+        }
+        #item-zeorbit .copy-button:hover { background-color: #0000cc; box-shadow: 0 0 15px rgba(0, 0, 255, 0.8), 0 0 20px rgba(0, 0, 255, 0.5); }
+
+        .copy-button:active {
+            transform: scale(0.95);
+        }
+        
+        /* Notifikasi 'Copied!' */
+        .copied::after {
+            content: "Copied!";
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ffffff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            animation: fadeout 1.5s forwards;
+            opacity: 0;
+        }
+
+        #item-zehubb-universal.copied::after { background-color: cyan; }
+        #item-fling-all.copied::after { background-color: magenta; }
+        #item-zefling.copied::after { background-color: yellow; color: #333; }
+        #item-zertex.copied::after { background-color: lime; color: #333; }
+        #item-zeflingv2.copied::after { background-color: orange; color: #333; }
+        #item-zeview.copied::after { background-color: purple; }
+        #item-zeorbit.copied::after { background-color: blue; }
+
+        @keyframes fadeout {
+            0% { opacity: 1; transform: translateY(-50%) scale(1); }
+            100% { opacity: 0; transform: translateY(-70%) scale(0.8); }
+        }
+        /* --- Akhir Perubahan CSS --- */
+
+        .script-item textarea {
+            width: 100%;
+            background-color: #3a3a3a;
+            color: #ffffff;
+            border: 1px solid #555555;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+            box-sizing: border-box;
+            resize: none;
+            overflow-y: auto;
+            height: 60px;
+            font-family: "Courier New", Courier, monospace;
+        }
+        .script-content {
+            flex-grow: 1;
+            margin-right: 15px;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #3a3a3a;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        .social-icons a {
+            filter: grayscale(100%) brightness(200%);
+            transition: filter 0.3s;
+        }
+        .social-icons a:hover {
+            filter: grayscale(0%) brightness(100%);
+        }
+        .social-icons img {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Scrollbar kustom */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3e8e41;
+        }
+    </style>
 </head>
 <body>
-  <header>ZeHubb Official Scripts</header>
-  <div class="container"><div class="script-card">
-  <div class="script-title">ZeHubb Universal</div>
-  <div class="code-box">
-    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Viunze/ZeHubb/refs/heads/main/ZeHubb.lua"))()
-  </div>
+
+<div id="particles-js"></div>
+<div id="loading-screen">
+    <div id="loading-content">
+        <h1>Welcome to ZeHubb Web</h1>
+        <div class="preloader"></div> <button id="enter-button" onclick="showMainContent()">Click OK to enter</button>
+    </div>
 </div>
 
-<div class="script-card">
-  <div class="script-title">Fling All</div>
-  <div class="code-box">
-    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Viunze/flingall/refs/heads/main/flingall.lua"))()
-  </div>
+<div id="main-content">
+    <div class="container">
+        <h1 style="position: relative;">ZeHubb Official Website</h1>
+
+        <div class="script-item" id="item-zehubb-universal">
+            <div class="script-content">
+                <h3 id="zehubb-universal-title">ZeHubb | Universal</h3>
+                <textarea id="zehubb-universal" readonly>loadstring(game:HttpGet("https://raw.githubusercontent.com/Viunze/ZeHubb/refs/heads/main/ZeHubb.lua"))()</textarea>
+            </div>
+            <button class="copy-button" onclick="copyToClipboard('zehubb-universal', 'item-zehubb-universal')">Copy</button>
+        </div>
+
+        <div class="script-item" id="item-fling-all">
+            <div class="script-content">
+                <h3 id="fling-all-title">Fling All | Universal</h3>
+                <textarea id="fling-all" readonly>loadstring(game:HttpGet("https://raw.githubusercontent.com/Viunze/flingall/refs/heads/main/flingall.lua"))()</textarea>
+            </div>
+            <button class="copy-button" onclick="copyToClipboard('fling-all', 'item-fling-all')">Copy</button>
+        </div>
+
+        <div class="script-item" id="item-zefling">
+            <div class="script-content">
+                <h3 id="zefling-title">ZeFling | Tsb</h3>
+                <textarea id="zefling" readonly>loadstring(game:HttpGet("https://raw.githubusercontent.com/Viunze/ZeSecure/refs/heads/main/ZeSecure.lua"))()</textarea>
+            </div>
+            <button class="copy-button" onclick="copyToClipboard('zefling', 'item-zefling')">Copy</button>
+        </div>
+
+        <div class="script-item" id="item-zertex">
+            <div class="script-content">
+                <h3 id="zertex-title">ZerTex | Tsb</h3>
+                <textarea id="zertex" readonly>loadstring(game:HttpGet("https://raw.githubusercontent.com/Viunze/ZeCuree2/refs/heads/main/Zertex.lua"))()</textarea>
+            </div>
+            <button class="copy-button" onclick="copyToClipboard('zertex', 'item-zertex')">Copy</button>
+        </div>
+
+        <div class="script-item" id="item-zeflingv2">
+            <div class="script-content">
+                <h3 id="zeflingv2-title">ZeFlingV2 | Tsb</h3>
+                <textarea id="zeflingv2" readonly>loadstring(game:HttpGet("https://raw.githubusercontent.com/Viunze/ZeeFlingV2/refs/heads/main/ZeeFlingV2.lua"))()</textarea>
+            </div>
+            <button class="copy-button" onclick="copyToClipboard('zeflingv2', 'item-zeflingv2')">Copy</button>
+        </div>
+        
+        <div class="script-item" id="item-zeview">
+            <div class="script-content">
+                <h3 id="zeview-title">ZeView | Universal</h3>
+                <textarea id="zeview" readonly>loadstring(game:HttpGet("https://raw.githubusercontent.com/Viunze/ZeView/refs/heads/main/ZeView.lua"))()</textarea>
+            </div>
+            <button class="copy-button" onclick="copyToClipboard('zeview', 'item-zeview')">Copy</button>
+        </div>
+        
+        <div class="script-item" id="item-zeorbit">
+            <div class="script-content">
+                <h3 id="zeorbit-title">ZeOrbit | Tsb</h3>
+                <textarea id="zeorbit" readonly>loadstring(game:HttpGet("https://raw.githubusercontent.com/Viunze/ZeOrbit/refs/heads/main/ZeOrbit.lua"))()</textarea>
+            </div>
+            <button class="copy-button" onclick="copyToClipboard('zeorbit', 'item-zeorbit')">Copy</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="social-icons">
+            <a href="https://www.tiktok.com/@xploitforceoffc?_t=ZS-8ynomt5sMnU&_r=1" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/TikTok_logo_square_black.svg/1024px-TikTok_logo_square_black.svg.png" alt="TikTok">
+            </a>
+            <a href="https://discord.gg/QjsgcpFDDr" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Discord_logo_black.svg/1200px-Discord_logo_black.svg.png" alt="Discord">
+            </a>
+            <a href="https://chat.whatsapp.com/CTzzMGBGnkJ3jgdfSF0y4d?mode=ac_t" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1200px-WhatsApp.svg.png" alt="WhatsApp">
+            </a>
+        </div>
+    </footer>
 </div>
 
-<div class="script-card">
-  <div class="script-title">ZeFling</div>
-  <div class="code-box">
-    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Viunze/ZeSecure/refs/heads/main/ZeSecure.lua"))()
-  </div>
-</div>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    // Inisialisasi particles.js
+    particlesJS('particles-js', {
+        "particles": {
+            "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+            "color": { "value": "#4CAF50" },
+            "shape": { "type": "circle", "stroke": { "width": 0, "color": "#000000" }, "polygon": { "nb_sides": 5 } },
+            "opacity": { "value": 0.5, "random": false, "anim": { "enable": false, "speed": 1, "opacity_min": 0.1, "sync": false } },
+            "size": { "value": 3, "random": true, "anim": { "enable": false, "speed": 40, "size_min": 0.1, "sync": false } },
+            "line_linked": { "enable": true, "distance": 150, "color": "#4CAF50", "opacity": 0.4, "width": 1 },
+            "move": { "enable": true, "speed": 6, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false, "attract": { "enable": false, "rotateX": 600, "rotateY": 1200 } }
+        },
+        "interactivity": {
+            "detect_on": "canvas",
+            "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+            "modes": {
+                "grab": { "distance": 400, "line_linked": { "opacity": 1 } },
+                "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 },
+                "repulse": { "distance": 200, "duration": 0.4 },
+                "push": { "particles_nb": 4 },
+                "remove": { "particles_nb": 2 }
+            }
+        },
+        "retina_detect": true
+    });
 
-<div class="script-card">
-  <div class="script-title">ZerTex</div>
-  <div class="code-box">
-    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Viunze/ZeCuree2/refs/heads/main/Zertex.lua"))()
-  </div>
-</div>
-
-<div class="script-card">
-  <div class="script-title">ZeFlingV2</div>
-  <div class="code-box">
-    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Viunze/ZeeFlingV2/refs/heads/main/ZeeFlingV2.lua"))()
-  </div>
-</div>
-
-<div class="script-card">
-  <div class="script-title">ZeView</div>
-  <div class="code-box">
-    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Viunze/ZeView/refs/heads/main/ZeView.lua"))()
-  </div>
-</div>
-
-<div class="script-card">
-  <div class="script-title">ZeOrbit</div>
-  <div class="code-box">
-    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Viunze/ZeOrbit/refs/heads/main/ZeOrbit.lua"))()
-  </div>
-</div>
-
-  </div>  <footer>
-    <a href="https://www.tiktok.com/@xploitforceoffc?_t=ZS-8ynomt5sMnU&_r=1" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg" alt="TikTok" />
-    </a>
-    <a href="https://discord.gg/QjsgcpFDDr" target="_blank">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Discord_logo.svg" alt="Discord" />
-    </a>
-  </footer>  <script>
-    function copyCode(btn) {
-      const code = btn.parentElement.textContent.replace('Copy', '').trim();
-      navigator.clipboard.writeText(code).then(() => {
-        btn.textContent = 'Copied!';
-        setTimeout(() => btn.textContent = 'Copy', 1500);
-      });
+    // Fungsi untuk menampilkan konten utama dan menyembunyikan loading screen
+    function showMainContent() {
+        const loadingScreen = document.getElementById('loading-screen');
+        const mainContent = document.getElementById('main-content');
+        
+        loadingScreen.classList.add('hidden');
+        
+        setTimeout(() => {
+            mainContent.classList.add('visible');
+            document.body.style.overflow = 'auto';
+        }, 1000);
     }
-  </script></body>
+
+    // Fungsi untuk copy ke clipboard dan menampilkan animasi
+    function copyToClipboard(elementId, parentElementId) {
+        var copyText = document.getElementById(elementId);
+        
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+
+        navigator.clipboard.writeText(copyText.value)
+            .then(() => {
+                var parentElement = document.getElementById(parentElementId);
+                parentElement.classList.add('copied');
+                
+                setTimeout(() => {
+                    parentElement.classList.remove('copied');
+                }, 1500);
+            })
+            .catch(err => {
+                console.error("Gagal meng-copy: ", err);
+            });
+    }
+</script>
+
+</body>
 </html>
